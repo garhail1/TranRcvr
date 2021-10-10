@@ -224,6 +224,17 @@
     <avrtoolinterfaceclock>2000000</avrtoolinterfaceclock>
     <AAFDebugger>
       <AAFDebugFiles>
+        <DebugFile>
+          <path>\Debug\Transmitter.lss</path>
+          <AAFSetting>
+            <Label>Lss Files</Label>
+            <Extention>.lss</Extention>
+            <Regex>^\s*(?&lt;address&gt;[a-f0-9]*):\s*.*$</Regex>
+            <DebugEnabled>true</DebugEnabled>
+            <RegexGroups>address</RegexGroups>
+            <DebuggerExpression>$pc</DebuggerExpression>
+          </AAFSetting>
+        </DebugFile>
       </AAFDebugFiles>
     </AAFDebugger>
   </PropertyGroup>
@@ -428,6 +439,7 @@
   <armgcc.compiler.optimization.level>Optimize (-O1)</armgcc.compiler.optimization.level>
   <armgcc.compiler.optimization.OtherFlags>-fdata-sections</armgcc.compiler.optimization.OtherFlags>
   <armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
+  <armgcc.compiler.optimization.PrepareDataForGarbageCollection>True</armgcc.compiler.optimization.PrepareDataForGarbageCollection>
   <armgcc.compiler.optimization.DebugLevel>Maximum (-g3)</armgcc.compiler.optimization.DebugLevel>
   <armgcc.compiler.warnings.AllWarnings>True</armgcc.compiler.warnings.AllWarnings>
   <armgcc.compiler.miscellaneous.OtherFlags>-pipe -fno-strict-aliasing -Wall -Werror-implicit-function-declaration -Wpointer-arith -std=gnu99 -ffunction-sections -fdata-sections -Wchar-subscripts -Wcomment -Wformat=2 -Wimplicit-int -Wmain -Wparentheses -Wsequence-point -Wreturn-type -Wswitch -Wtrigraphs -Wunused -Wuninitialized -Wunknown-pragmas -Wfloat-equal -Wundef -Wshadow -Wbad-function-cast -Wwrite-strings -Wsign-compare -Waggregate-return  -Wmissing-declarations -Wformat -Wmissing-format-attribute -Wno-deprecated-declarations -Wpacked -Wredundant-decls -Wnested-externs -Wlong-long -Wunreachable-code -Wcast-align --param max-inline-insns-single=500</armgcc.compiler.miscellaneous.OtherFlags>

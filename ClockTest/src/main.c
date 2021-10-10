@@ -5,25 +5,6 @@
  *
  */
 
-/**
- * \mainpage User Application template doxygen documentation
- *
- * \par Empty user application template
- *
- * This is a bare minimum user application template.
- *
- * For documentation of the board, go \ref group_common_boards "here" for a link
- * to the board-specific documentation.
- *
- * \par Content
- *
- * -# Include the ASF header files (through asf.h)
- * -# Minimal main function that starts with a call to system_init()
- * -# Basic usage of on-board LED and button
- * -# "Insert application code here" comment
- *
- */
-
 /*
  * Include header files for all drivers that have been imported from
  * Atmel Software Framework (ASF).
@@ -60,6 +41,7 @@ volatile uint16_t   head = 0, tail = 0,
 #endif
 
 volatile uint8_t    old_state = 0, new_state = 0;
+volatile uint32_t   rate_flag = 0;
 
 
 struct usart_module  usart_instance0;
@@ -77,7 +59,7 @@ struct usart_module  usart_instance1;
 	//NVIC_EnableIRQ(SysTick_IRQn);		// Enable SysTick Interrupt   
 //}
 
-static bool SysTick_Init()
+static inline bool SysTick_Init()
 {
     struct port_config  pin_cfg;
 
@@ -96,7 +78,7 @@ static bool SysTick_Init()
     return true;
 }
 
-static void conigure_pins()
+static inline void conigure_pins()
 {
     struct port_config  pin_cfg;
 
@@ -124,6 +106,7 @@ static void conigure_pins()
     
 void SysTick_Handler()
 {
+    rate_flag++;
 #if     defined(CHK_WRITER)
     usart_write_wait( &usart_instance0, temp9 );
     usart_write_wait( &usart_instance1, temp8 );
@@ -139,12 +122,13 @@ void SysTick_Handler()
 #else
     port_pin_toggle_output_level( TOGGLE );
 #endif
+    rate_flag--;
 }
 
 /**
  *  Configure SERCOM0 TRANSMITTER
  */
-static void configure_sercom0(void)
+static inline void configure_sercom0(void)
 {
 	struct usart_config     usart_conf;
 
@@ -156,7 +140,7 @@ static void configure_sercom0(void)
 	usart_conf.pinmux_pad3 = SERCOM0_PINMUX_PAD3;
 	usart_conf.baudrate    = SERCOM0_BAUDRATE;
 #ifdef TRANSMITTER
-	usart_conf.character_size = USART_CHARACTER_SIZE_9BIT;
+	//usart_conf.character_size = USART_CHARACTER_SIZE_9BIT;
 #else
 	usart_conf.character_size = USART_CHARACTER_SIZE_8BIT;
 #endif
@@ -165,7 +149,7 @@ static void configure_sercom0(void)
 	usart_enable(&usart_instance0);
 }
 
-static void configure_sercom1(void)
+static inline void configure_sercom1(void)
 {
 	struct usart_config     usart_conf;
 	usart_get_config_defaults(&usart_conf);
@@ -176,7 +160,7 @@ static void configure_sercom1(void)
 	usart_conf.pinmux_pad3 = SERCOM1_PINMUX_PAD3;
     usart_conf.baudrate    = SERCOM1_BAUDRATE;
 #ifdef RECEIVER
-	usart_conf.character_size = USART_CHARACTER_SIZE_9BIT;
+	//usart_conf.character_size = USART_CHARACTER_SIZE_9BIT;
 #else
 	usart_conf.character_size = USART_CHARACTER_SIZE_8BIT;
 #endif

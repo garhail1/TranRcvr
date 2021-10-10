@@ -1,7 +1,7 @@
 /*
- * transmitter.c
+ *  transmitter.c
  *
- * Created: 20.09.2021 16:44:12
+ *  Created: 20.09.2021 16:44:12
  *  Author: garhail
  */ 
 
@@ -15,7 +15,7 @@ void transmitter()
 {
     if( read_data8() )
     {
-        write_data9();
+        write_data8();  //  write_data9();
         return;
     }
 
